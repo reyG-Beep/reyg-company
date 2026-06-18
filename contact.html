@@ -40,12 +40,38 @@ cursor:pointer;
 <p>Phone: +255 653 134 864</p>
 <p>Location: Dar es Salaam, Tanzania</p>
 
-<form>
-<input type="text" placeholder="Your Name" required>
-<input type="email" placeholder="Your Email" required>
-<textarea rows="5" placeholder="Your Message"></textarea>
-<button type="submit">Send Message</button>
+<form id="contact-form">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+
+    <button type="submit">Send Message</button>
 </form>
+
+<p id="status"></p>
+
+<script>
+document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch("https://formsubmit.co/ajax/rehemaghati57@gmail.com", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("status").innerHTML =
+            "Message sent successfully!";
+        document.getElementById("contact-form").reset();
+    })
+    .catch(error => {
+        document.getElementById("status").innerHTML =
+            "Failed to send message.";
+    });
+});
+</script>
 
 </div>
 
