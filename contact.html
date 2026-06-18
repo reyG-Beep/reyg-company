@@ -40,7 +40,9 @@ cursor:pointer;
 <p>Phone: +255 653 134 864</p>
 <p>Location: Dar es Salaam, Tanzania</p>
 
-<form id="contact-form">
+<<form id="contact-form" onsubmit="event.preventDefault();">
+    <input type="hidden" name="_captcha" value="false">
+
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="email" name="email" placeholder="Your Email" required>
     <textarea name="message" placeholder="Your Message" required></textarea>
@@ -52,7 +54,10 @@ cursor:pointer;
 
 <script>
 document.getElementById("contact-form").addEventListener("submit", function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Secondary backup protection against page reload
+
+    // Visual feedback so you know the button press actually triggered the JS
+    document.getElementById("status").innerHTML = "Sending...";
 
     // 1. Gather form data
     let formData = new FormData(this);
