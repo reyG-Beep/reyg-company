@@ -54,25 +54,38 @@ cursor:pointer;
 document.getElementById("contact-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
+    // 1. Gather form data
     let formData = new FormData(this);
+    
+    // 2. Convert FormData into a standard JavaScript object
+    let object = {};
+    formData.forEach((value, key) => {
+        object[key] = value;
+    });
 
+    // 3. Convert the object into a JSON string
+    let json = JSON.stringify(object);
+
+    // 4. Send the request with proper JSON headers
     fetch("https://formsubmit.co/ajax/rehemaghati57@gmail.com", {
         method: "POST",
-        body: formData
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: json
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById("status").innerHTML =
-            "Message sent successfully!";
+        document.getElementById("status").innerHTML = "Message sent successfully!";
         document.getElementById("contact-form").reset();
     })
     .catch(error => {
-        document.getElementById("status").innerHTML =
-            "Failed to send message.";
+        console.error("Error:", error);
+        document.getElementById("status").innerHTML = "Failed to send message.";
     });
 });
 </script>
-
 </div>
 
 </body>
